@@ -1,0 +1,39 @@
+﻿<Window x:Class="Mastermind.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Mastermind2"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        Background="DarkCyan">
+    <Grid>
+
+        <ComboBox Name="ComboBox1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="0,0,0,0" SelectionChanged="SelectionChanged"/>
+        <ComboBox Name="ComboBox2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="200,0,0,0" SelectionChanged="SelectionChanged"/>
+        <ComboBox Name="ComboBox3" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="400,0,0,0" SelectionChanged="SelectionChanged"/>
+        <ComboBox Name="ComboBox4" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="600,0,0,0" SelectionChanged="SelectionChanged"/>
+
+        <Label Name="Kleur1" Content="" HorizontalAlignment="Left" Margin="0,22,0,0" VerticalAlignment="Top" Height="130" Width="200" Background="Transparent" />
+        <Label Name="Kleur2" Content="" HorizontalAlignment="Left" Margin="200,22,0,0" VerticalAlignment="Top" Height="130" Width="200" Background="Transparent" />
+        <Label Name="Kleur3" Content="" HorizontalAlignment="Left" Margin="400,22,0,0" VerticalAlignment="Top" Height="130" Width="200" Background="Transparent" />
+        <Label Name="Kleur4" Content="" HorizontalAlignment="Left" Margin="600,22,0,0" VerticalAlignment="Top" Height="130" Width="200" Background="Transparent" />
+
+        <TextBlock Name="TextBlock1" Text="Gekozen kleur: " HorizontalAlignment="Left" Margin="0,160,0,0" VerticalAlignment="Top" Width="200" Foreground="White" />
+        <TextBlock Name="TextBlock2" Text="Gekozen kleur: " HorizontalAlignment="Left" Margin="200,160,0,0" VerticalAlignment="Top" Width="200" Foreground="White" />
+        <TextBlock Name="TextBlock3" Text="Gekozen kleur: " HorizontalAlignment="Left" Margin="400,160,0,0" VerticalAlignment="Top" Width="200" Foreground="White" />
+        <TextBlock Name="TextBlock4" Text="Gekozen kleur: " HorizontalAlignment="Left" Margin="600,160,0,0" VerticalAlignment="Top" Width="200" Foreground="White" />
+
+
+        <Border Name="kleur1Border" BorderThickness="6" BorderBrush="Gray" Background="Transparent" 
+                HorizontalAlignment="Left" Width="200" Height="130" Margin="0,22,0,0" VerticalAlignment="Top"/>
+        <Border Name="kleur2Border" BorderThickness="6" BorderBrush="Gray" Background="Transparent" 
+                HorizontalAlignment="Left" Width="200" Height="130" Margin="200,22,0,0" VerticalAlignment="Top"/>
+        <Border Name="kleur3Border" BorderThickness="6" BorderBrush="Gray" Background="Transparent" 
+                HorizontalAlignment="Left" Width="200" Height="130" Margin="400,22,0,0" VerticalAlignment="Top"/>
+        <Border Name="kleur4Border" BorderThickness="6" BorderBrush="Gray" Background="Transparent" 
+                HorizontalAlignment="Left" Width="200" Height="130" Margin="600,22,0,0" VerticalAlignment="Top"/>
+
+        <Button Content="Check code" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,150,0,0" Click="Button_Click" />
+    </Grid>
+</Window>
