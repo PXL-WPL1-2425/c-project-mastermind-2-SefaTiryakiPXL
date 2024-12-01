@@ -19,27 +19,21 @@ using System.Windows.Shapes;
 
 namespace Mastermind
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private string TitelAppears1;
         private string TitelAppears2;
         private string TitelAppears3;
         private string TitelAppears4;
-
         string Titel;
         int attempts = 0;
+        List<List<string>> Historiek = new List<List<string>>();
 
-        string[,] Historiek = new string[10, 5];
-        // 10 =  rijgen van 5 kolemmen 4 van de kolommen zijn de kleuren en de laatste is de feedback
+
         public MainWindow()
         {
             InitializeComponent();
             TitelAppearsAbove();
-
-
             // array 
             string[] colors = { "rood", "geel", "groen", "oranje", "wit", "blauw" };
 
@@ -51,11 +45,7 @@ namespace Mastermind
                     comboBox.Items.Add(color);
                 }
             }
-
-
-
         }
-
         private void TitelAppearsAbove()
         {
             Random rnd = new Random();
@@ -65,88 +55,106 @@ namespace Mastermind
             TitelAppears3 = TitelAppears[rnd.Next(0, TitelAppears.Length)];
             TitelAppears4 = TitelAppears[rnd.Next(0, TitelAppears.Length)];
 
-            Titel = TitelAppears1 + "," + TitelAppears2 + "," + TitelAppears3 + "," + TitelAppears4;
-
+            Titel = $"{TitelAppears1}, {TitelAppears2}, {TitelAppears3}, {TitelAppears4}";
 
             this.Title = $"Mastermind ({Titel})";
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
             string kleur1 = ComboBox1.SelectedItem?.ToString();
             string kleur2 = ComboBox2.SelectedItem?.ToString();
             string kleur3 = ComboBox3.SelectedItem?.ToString();
             string kleur4 = ComboBox4.SelectedItem?.ToString();
 
             attempts++;
-            this.Title = $"Mastermind ({Titel}, poging: {attempts})";
-
-
+            this.Title = $"Mastermind - Poging {attempts}";
 
             if (kleur1 == TitelAppears1 && kleur2 == TitelAppears2 && kleur3 == TitelAppears3 && kleur4 == TitelAppears4)
             {
-                MessageBox.Show($"Code is juist!! In {attempts} pogingen");
-                return; 
+                MessageBox.Show($"juist!! In {attempts} pogingen");
+                AskToReplay();
+                return;
             }
 
             if (attempts >= 10)
             {
                 MessageBox.Show($"Gefaald!! De code is: {Titel}");
-                Close();
-                
+                AskToReplay();
+                return;
             }
-            
-
-            string[] correcteCode = { TitelAppears1, TitelAppears2, TitelAppears3, TitelAppears4 };
-            string[] gokken = { kleur1, kleur2, kleur3, kleur4 };
-            string feedback = "";
             int score = 0;
-
-            // reset als er iets niet meer klopt
-            ResetBorder();
-
+            string feedback = "";
+            string[] correctCode = { TitelAppears1, TitelAppears2, TitelAppears3, TitelAppears4 };
+            string[] gokken = { kleur1, kleur2, kleur3, kleur4 };
 
             for (int i = 0; i < 4; i++)
             {
-                if (gokken[i] == correcteCode[i]) 
-                { 
-                    SetBorderColor(i, Brushes.DarkRed); 
-                    feedback += "J ";
+                if (gokken[i] == correctCode[i])
+                {
+                    SetBorderColor(i, Brushes.DarkRed);
+                    feedback += "J "; // Juiste
                     score += 0;
                 }
-                else if (correcteCode.Contains(gokken[i])) 
-                { 
-                    SetBorderColor(i, Brushes.Wheat); 
-                    feedback += "FP ";
+                else if (correctCode.Contains(gokken[i]))
+                {
+                    SetBorderColor(i, Brushes.Wheat);
                     score += 1;
+                    feedback += "FP "; // verkeerde plaats
                 }
-                else 
-                { 
-                    feedback += "F ";
+                else
+                {
+                    feedback += "F "; // Fout
                     score += 2;
                 }
             }
-
-            if (attempts <= 10)
+            List<string> currentAttempt = new List<string>
             {
-                Historiek[attempts - 1, 0] = kleur1;
-                Historiek[attempts - 1, 1] = kleur2;
-                Historiek[attempts - 1, 2] = kleur3;
-                Historiek[attempts - 1, 3] = kleur4;
-                Historiek[attempts - 1, 4] = feedback;
-            }
+                kleur1,
+                kleur2,
+                kleur3,
+                kleur4,
+                feedback
+            };
+            Historiek.Add(currentAttempt);
 
             ListBoxHistoriek.Items.Clear();
-
-            for (int i = 0; i < attempts; i++)
+            for (int i = 0; i < Historiek.Count; i++)
             {
-                string feedbackString = $"{Historiek[i, 0]} ,{Historiek[i, 1]} ,{Historiek[i, 2]} ,{Historiek[i, 3]} -> {Historiek[i, 4]}";
+                string feedbackString = $"{Historiek[i][0]} ,{Historiek[i][1]} ,{Historiek[i][2]} ,{Historiek[i][3]} -> {Historiek[i][4]}";
                 ListBoxHistoriek.Items.Add(feedbackString);
             }
 
-            Score.Content = $"Score: {score} strafpunten"; 
-
+            Score.Content = $"Score: {score} strafpunten";
         }
+
+        private void AskToReplay()
+        {
+            MessageBoxResult result = MessageBox.Show("Wil je opnieuw spelen?", "Spel afgelopen", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                reset();
+            }
+            else
+            {
+                Close();
+            }
+        }
+
+        private void reset()
+        {
+            attempts = 0; 
+            ListBoxHistoriek.Items.Clear();
+            TitelAppearsAbove();
+
+            ComboBox1.SelectedIndex = -1;
+            ComboBox2.SelectedIndex = -1;
+            ComboBox3.SelectedIndex = -1;
+            ComboBox4.SelectedIndex = -1;
+
+            this.Title = $"Mastermind - Nieuwe code: {Titel}";
+        }
+
 
         private void ResetBorder()
         {
@@ -162,16 +170,16 @@ namespace Mastermind
             {
                 case 0:
                     kleur1Border.BorderBrush = color;
-                    break;
+                break;
                 case 1:
                     kleur2Border.BorderBrush = color;
-                    break;
+                break;
                 case 2:
-                    kleur3Border.BorderBrush = color;
-                    break;
+                    kleur3Border.BorderBrush = color;    
+                break;
                 case 3:
                     kleur4Border.BorderBrush = color;
-                    break;
+                break;
             }
         }
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -179,6 +187,7 @@ namespace Mastermind
             // kijkt of het een combobox is
             ComboBox comboBox = sender as ComboBox;
             if (comboBox == null) return;
+            if (comboBox.SelectedItem == null) return;
 
             string kleur = comboBox.SelectedItem.ToString();
             if (kleur == null) return;
@@ -204,7 +213,6 @@ namespace Mastermind
                 TextBlock4.Text = $"Gekozen kleur: {kleur}";
             }
         }
-
         private Brush GetColor(string kleur)
         {
             switch (kleur.ToLower())
@@ -229,11 +237,7 @@ namespace Mastermind
 
                 default: 
                 return Brushes.Transparent;
-
             }
         }
-
     }
-
 }
-
