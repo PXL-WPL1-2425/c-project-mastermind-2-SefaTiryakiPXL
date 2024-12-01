@@ -100,7 +100,7 @@ namespace Mastermind
             string[] correcteCode = { TitelAppears1, TitelAppears2, TitelAppears3, TitelAppears4 };
             string[] gokken = { kleur1, kleur2, kleur3, kleur4 };
             string feedback = "";
-
+            int score = 0;
 
             // reset als er iets niet meer klopt
             ResetBorder();
@@ -110,15 +110,20 @@ namespace Mastermind
             {
                 if (gokken[i] == correcteCode[i]) 
                 { 
-                    SetBorderColor(i, Brushes.DarkRed); feedback += "J "; 
+                    SetBorderColor(i, Brushes.DarkRed); 
+                    feedback += "J ";
+                    score += 0;
                 }
                 else if (correcteCode.Contains(gokken[i])) 
                 { 
-                SetBorderColor(i, Brushes.Wheat); feedback += "FP "; 
+                    SetBorderColor(i, Brushes.Wheat); 
+                    feedback += "FP ";
+                    score += 1;
                 }
                 else 
                 { 
-                    feedback += "F "; 
+                    feedback += "F ";
+                    score += 2;
                 }
             }
 
@@ -138,6 +143,8 @@ namespace Mastermind
                 string feedbackString = $"{Historiek[i, 0]} ,{Historiek[i, 1]} ,{Historiek[i, 2]} ,{Historiek[i, 3]} -> {Historiek[i, 4]}";
                 ListBoxHistoriek.Items.Add(feedbackString);
             }
+
+            Score.Content = $"Score: {score} strafpunten"; 
 
         }
 
