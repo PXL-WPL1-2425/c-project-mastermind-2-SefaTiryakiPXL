@@ -27,6 +27,7 @@ namespace Mastermind
         private string TitelAppears4;
         string Titel;
         int attempts = 0;
+        int score = 100;
         List<List<string>> Historiek = new List<List<string>>();
 
 
@@ -82,7 +83,7 @@ namespace Mastermind
                 AskToReplay();
                 return;
             }
-            int score = 0;
+            int scorePenalty = 0;
             string feedback = "";
             string[] correctCode = { TitelAppears1, TitelAppears2, TitelAppears3, TitelAppears4 };
             string[] gokken = { kleur1, kleur2, kleur3, kleur4 };
@@ -93,19 +94,23 @@ namespace Mastermind
                 {
                     SetBorderColor(i, Brushes.DarkRed);
                     feedback += "J "; // Juiste
-                    score += 0;
                 }
                 else if (correctCode.Contains(gokken[i]))
                 {
                     SetBorderColor(i, Brushes.Wheat);
-                    score += 1;
+                    scorePenalty += 1;
                     feedback += "FP "; // verkeerde plaats
                 }
                 else
                 {
                     feedback += "F "; // Fout
-                    score += 2;
+                    scorePenalty += 2;
                 }
+            }
+            score -= scorePenalty;
+            if (score < 0)
+            {
+                score = 0;
             }
             List<string> currentAttempt = new List<string>
             {
@@ -126,7 +131,6 @@ namespace Mastermind
 
             Score.Content = $"Score: {score} strafpunten";
         }
-
         private void AskToReplay()
         {
             MessageBoxResult result = MessageBox.Show("Wil je opnieuw spelen?", "Spel afgelopen", MessageBoxButton.YesNo);
@@ -137,15 +141,20 @@ namespace Mastermind
             }
             else
             {
-                Close();
+              MessageBox.Show("Je kunt het spel afsluiten wanneer je wilt.");
             }
         }
-
         private void reset()
         {
-            attempts = 0; 
+            attempts = 0;
+            score = 100;
             ListBoxHistoriek.Items.Clear();
             TitelAppearsAbove();
+            ResetBorder();
+            ComboBox1.SelectedItem = null;
+            ComboBox2.SelectedItem = null;
+            ComboBox3.SelectedItem = null;
+            ComboBox4.SelectedItem = null;
 
             ComboBox1.SelectedIndex = -1;
             ComboBox2.SelectedIndex = -1;
@@ -205,7 +214,7 @@ namespace Mastermind
             else if (comboBox.Name == "ComboBox3")
             {
                 Kleur3.Background = GetColor(kleur);
-                TextBlock3.Text = $"Gekozen kleur: {kleur}";
+                TextBlock3.Text = $"Gekozen k   leur: {kleur}";
             }
             else if (comboBox.Name == "ComboBox4")
             {
@@ -237,6 +246,14 @@ namespace Mastermind
 
                 default: 
                 return Brushes.Transparent;
+            }
+        }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Weet je zeker dat je wilt afsluiten?", "Afsluiten", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.No)
+            {
+                e.Cancel = true;
             }
         }
     }
