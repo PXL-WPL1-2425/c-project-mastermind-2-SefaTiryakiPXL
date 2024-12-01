@@ -31,6 +31,9 @@ namespace Mastermind
 
         string Titel;
         int attempts = 0;
+
+        string[,] Historiek = new string[10, 5];
+        // 10 =  rijgen van 5 kolemmen 4 van de kolommen zijn de kleuren en de laatste is de feedback
         public MainWindow()
         {
             InitializeComponent();
@@ -78,6 +81,8 @@ namespace Mastermind
             attempts++;
             this.Title = $"Mastermind ({Titel}, poging: {attempts})";
 
+
+
             if (kleur1 == TitelAppears1 && kleur2 == TitelAppears2 && kleur3 == TitelAppears3 && kleur4 == TitelAppears4)
             {
                 MessageBox.Show($"Code is juist!! In {attempts} pogingen");
@@ -93,9 +98,9 @@ namespace Mastermind
             
 
             string[] correcteCode = { TitelAppears1, TitelAppears2, TitelAppears3, TitelAppears4 };
-
-
             string[] gokken = { kleur1, kleur2, kleur3, kleur4 };
+            string feedback = "";
+
 
             // reset als er iets niet meer klopt
             ResetBorder();
@@ -103,17 +108,37 @@ namespace Mastermind
 
             for (int i = 0; i < 4; i++)
             {
-                if (gokken[i] == correcteCode[i])
-                {
-
-                    SetBorderColor(i, Brushes.DarkRed);
+                if (gokken[i] == correcteCode[i]) 
+                { 
+                    SetBorderColor(i, Brushes.DarkRed); feedback += "J "; 
                 }
-                else if (correcteCode.Contains(gokken[i]))
-                {
-
-                    SetBorderColor(i, Brushes.Wheat);
+                else if (correcteCode.Contains(gokken[i])) 
+                { 
+                SetBorderColor(i, Brushes.Wheat); feedback += "FP "; 
+                }
+                else 
+                { 
+                    feedback += "F "; 
                 }
             }
+
+            if (attempts <= 10)
+            {
+                Historiek[attempts - 1, 0] = kleur1;
+                Historiek[attempts - 1, 1] = kleur2;
+                Historiek[attempts - 1, 2] = kleur3;
+                Historiek[attempts - 1, 3] = kleur4;
+                Historiek[attempts - 1, 4] = feedback;
+            }
+
+            ListBoxHistoriek.Items.Clear();
+
+            for (int i = 0; i < attempts; i++)
+            {
+                string feedbackString = $"{Historiek[i, 0]} ,{Historiek[i, 1]} ,{Historiek[i, 2]} ,{Historiek[i, 3]} -> {Historiek[i, 4]}";
+                ListBoxHistoriek.Items.Add(feedbackString);
+            }
+
         }
 
         private void ResetBorder()

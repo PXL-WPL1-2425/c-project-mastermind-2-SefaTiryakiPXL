@@ -34,6 +34,9 @@
         <Border Name="kleur4Border" BorderThickness="6" BorderBrush="Gray" Background="Transparent" 
                 HorizontalAlignment="Left" Width="200" Height="130" Margin="600,22,0,0" VerticalAlignment="Top"/>
 
+        <ListBox x:Name="ListBoxHistoriek" Width="300" Height="200" Margin="500,234,0,0" />
+
+
         <Button Content="Check code" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,150,0,0" Click="Button_Click" />
     </Grid>
 </Window>
