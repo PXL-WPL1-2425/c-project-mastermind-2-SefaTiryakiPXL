@@ -5,39 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mastermind2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="Mastermind" Height="500" Width="800"
         Background="DarkCyan">
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
 
-        <ComboBox Name="ComboBox1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="0,0,0,0" SelectionChanged="SelectionChanged"/>
-        <ComboBox Name="ComboBox2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="200,0,0,0" SelectionChanged="SelectionChanged"/>
-        <ComboBox Name="ComboBox3" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="400,0,0,0" SelectionChanged="SelectionChanged"/>
-        <ComboBox Name="ComboBox4" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="600,0,0,0" SelectionChanged="SelectionChanged"/>
+        <ComboBox Name="ComboBox1" Grid.Row="0" Grid.Column="0" Width="150" Margin="10" SelectionChanged="SelectionChanged"/>
+        <ComboBox Name="ComboBox2" Grid.Row="0" Grid.Column="1" Width="150" Margin="10" SelectionChanged="SelectionChanged"/>
+        <ComboBox Name="ComboBox3" Grid.Row="0" Grid.Column="2" Width="150" Margin="10" SelectionChanged="SelectionChanged"/>
+        <ComboBox Name="ComboBox4" Grid.Row="0" Grid.Column="3" Width="150" Margin="10" SelectionChanged="SelectionChanged"/>
 
-        <Label Name="Kleur1" Content="" HorizontalAlignment="Left" Margin="0,22,0,0" VerticalAlignment="Top" Height="130" Width="200" Background="Transparent" />
-        <Label Name="Kleur2" Content="" HorizontalAlignment="Left" Margin="200,22,0,0" VerticalAlignment="Top" Height="130" Width="200" Background="Transparent" />
-        <Label Name="Kleur3" Content="" HorizontalAlignment="Left" Margin="400,22,0,0" VerticalAlignment="Top" Height="130" Width="200" Background="Transparent" />
-        <Label Name="Kleur4" Content="" HorizontalAlignment="Left" Margin="600,22,0,0" VerticalAlignment="Top" Height="130" Width="200" Background="Transparent" />
+        <Label Name="Kleur1" Grid.Row="1" Grid.Column="0" Background="Transparent" Height="100" Margin="10"/>
+        <Label Name="Kleur2" Grid.Row="1" Grid.Column="1" Background="Transparent" Height="100" Margin="10"/>
+        <Label Name="Kleur3" Grid.Row="1" Grid.Column="2" Background="Transparent" Height="100" Margin="10"/>
+        <Label Name="Kleur4" Grid.Row="1" Grid.Column="3" Background="Transparent" Height="100" Margin="10"/>
 
-        <TextBlock Name="TextBlock1" Text="Gekozen kleur: " HorizontalAlignment="Left" Margin="0,160,0,0" VerticalAlignment="Top" Width="200" Foreground="White" />
-        <TextBlock Name="TextBlock2" Text="Gekozen kleur: " HorizontalAlignment="Left" Margin="200,160,0,0" VerticalAlignment="Top" Width="200" Foreground="White" />
-        <TextBlock Name="TextBlock3" Text="Gekozen kleur: " HorizontalAlignment="Left" Margin="400,160,0,0" VerticalAlignment="Top" Width="200" Foreground="White" />
-        <TextBlock Name="TextBlock4" Text="Gekozen kleur: " HorizontalAlignment="Left" Margin="600,160,0,0" VerticalAlignment="Top" Width="200" Foreground="White" />
+        <TextBlock Name="TextBlock1" Grid.Row="2" Grid.Column="0" Text="Gekozen kleur:" Foreground="White" Margin="10"/>
+        <TextBlock Name="TextBlock2" Grid.Row="2" Grid.Column="1" Text="Gekozen kleur:" Foreground="White" Margin="10"/>
+        <TextBlock Name="TextBlock3" Grid.Row="2" Grid.Column="2" Text="Gekozen kleur:" Foreground="White" Margin="10"/>
+        <TextBlock Name="TextBlock4" Grid.Row="2" Grid.Column="3" Text="Gekozen kleur:" Foreground="White" Margin="10"/>
 
+        <Border Name="kleur1Border" Grid.Row="1" Grid.Column="0" BorderBrush="Gray" BorderThickness="6" Background="Transparent" Height="100" Margin="10"/>
+        <Border Name="kleur2Border" Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="6" Background="Transparent" Height="100" Margin="10"/>
+        <Border Name="kleur3Border" Grid.Row="1" Grid.Column="2" BorderBrush="Gray" BorderThickness="6" Background="Transparent" Height="100" Margin="10"/>
+        <Border Name="kleur4Border" Grid.Row="1" Grid.Column="3" BorderBrush="Gray" BorderThickness="6" Background="Transparent" Height="100" Margin="10"/>
 
-        <Border Name="kleur1Border" BorderThickness="6" BorderBrush="Gray" Background="Transparent" 
-                HorizontalAlignment="Left" Width="200" Height="130" Margin="0,22,0,0" VerticalAlignment="Top"/>
-        <Border Name="kleur2Border" BorderThickness="6" BorderBrush="Gray" Background="Transparent" 
-                HorizontalAlignment="Left" Width="200" Height="130" Margin="200,22,0,0" VerticalAlignment="Top"/>
-        <Border Name="kleur3Border" BorderThickness="6" BorderBrush="Gray" Background="Transparent" 
-                HorizontalAlignment="Left" Width="200" Height="130" Margin="400,22,0,0" VerticalAlignment="Top"/>
-        <Border Name="kleur4Border" BorderThickness="6" BorderBrush="Gray" Background="Transparent" 
-                HorizontalAlignment="Left" Width="200" Height="130" Margin="600,22,0,0" VerticalAlignment="Top"/>
+        <ListBox Name="ListBoxHistoriek" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Height="200" Margin="150,61,5,61"/>
 
-        <ListBox Name="ListBoxHistoriek" Width="300" Height="200" Margin="500,234,0,0" />
-        <Label Name="Score" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="30" Margin="10,277,0,0"/>
+        <Label Name="Score" Content="Score" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontSize="16" Margin="25,43,0,0" Height="218" Width="165"/>
 
-
-        <Button Content="Check code"  Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,150,0,0" Click="Button_Click" />
+        <Button Content="Check code" Grid.Row="2" Grid.Column="2" Width="200" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click"/>
     </Grid>
 </Window>
